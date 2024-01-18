@@ -17,6 +17,12 @@ def shapley_value_single(data_set,model,feature_index,sample_index,coef=0.5):
         result += difference
     return result
 
+def shapley_value_all_features(data_set,model,sample_index,coef=0.5):
+    values = []
+    for feature_index in range(len(data_set[0])):
+        values.append(shapley_value_single(data_set,model,feature_index,sample_index,coef))
+    return values
+
 def shapley_value(data_set, model, *, feature_index = None, sample_index = None):
     if feature_index == None and sample_index == None:
         return shapley_value_all(data_set,model)
