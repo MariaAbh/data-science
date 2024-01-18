@@ -5,7 +5,8 @@ DEFAULT_COEF = 0.5
 def shapley_value_single(data_set,model,feature_index,sample_index,coef=DEFAULT_COEF):
     original_sample = data_set[sample_index]
     original_len = len(original_sample)
-    n = coef * (len(data_set) * 2**len(original_sample))
+    n = int(coef * (len(data_set) * 2**len(original_sample)))
+    result = 0
     for i in range(n):
         random_point = random.choice(data_set)
         partition = [random.randint(0,1) for _ in range(original_len)]
