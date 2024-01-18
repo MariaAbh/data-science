@@ -15,7 +15,7 @@ def shapley_value_single(data_set,model,feature_index,sample_index,coef=0.5):
         prediction_x2 = model(x2)
         difference = prediction_x1 - prediction_x2
         result += difference
-    return result
+    return result/n
 
 def shapley_value_all_features(data_set,model,sample_index,coef=0.5):
     values = []
