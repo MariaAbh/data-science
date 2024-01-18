@@ -1,6 +1,8 @@
 import random
 
-def shapley_value_single(data_set,model,feature_index,sample_index,coef=0.5):
+DEFAULT_COEF = 0.5
+
+def shapley_value_single(data_set,model,feature_index,sample_index,coef=DEFAULT_COEF):
     original_sample = data_set[sample_index]
     original_len = len(original_sample)
     n = coef * (len(data_set) * 2**len(original_sample))
@@ -17,19 +19,19 @@ def shapley_value_single(data_set,model,feature_index,sample_index,coef=0.5):
         result += difference
     return result/n
 
-def shapley_value_all_features(data_set,model,sample_index,coef=0.5):
+def shapley_value_all_features(data_set,model,sample_index,coef=DEFAULT_COEF):
     values = []
     for feature_index in range(len(data_set[0])):
         values.append(shapley_value_single(data_set,model,feature_index,sample_index,coef))
     return values
 
-def shapley_value_all_samples(data_set,model,feature_index):
+def shapley_value_all_samples(data_set,model,feature_index,coef=DEFAULT_COEF):
     nb_of_samples = len(data_set)
     for sample_index in range(nb_of_samples):
         result += shapley_value_single(data_set,model,feature_index,sample_index,coef)
     return result/nb_of_samples
 
-def shapley_value_all(data_set,model):
+def shapley_value_all(data_set,model,coef=DEFAULT_COEF):
     values = []
     nb_of_samples = len(data_set)
     for feature_index in range(len(data_set[0])):
