@@ -9,13 +9,18 @@ def shapley_value_single(data_set,model,feature_index,sample_index,coef=DEFAULT_
     result = 0
     for i in range(n):
         random_point = random.choice(data_set)
+
         partition = [random.randint(0,1) for _ in range(original_len)]
         partition[feature_index] = 0
+
         x1 = [(p*r)+(o*(1-p)) for p,r,o in zip(partition,random_point,original_sample)]
+
         x2 = x1[::]
         x2[feature_index] = random_point[feature_index]
+
         prediction_x1 = model(x1)
         prediction_x2 = model(x2)
+
         difference = prediction_x1 - prediction_x2
         result += difference
     return result/n
@@ -28,6 +33,7 @@ def shapley_value_all_features(data_set,model,sample_index,coef=DEFAULT_COEF):
 
 def shapley_value_all_samples(data_set,model,feature_index,coef=DEFAULT_COEF):
     nb_of_samples = len(data_set)
+    result = 0
     for sample_index in range(nb_of_samples):
         result += shapley_value_single(data_set,model,feature_index,sample_index,coef)
     return result/nb_of_samples
