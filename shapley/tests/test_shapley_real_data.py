@@ -34,3 +34,8 @@ def test_shapley_value_all_samples():
     res = shapley_value(X_test,model,feature_index=3)
     print(res)
     assert(False)
+
+def test_shapley_value_all():
+    res = shapley_value(X_test,model)
+    print(res)
+    assert(False)
