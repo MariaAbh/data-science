@@ -42,6 +42,7 @@ def shapley_value_all(data_set,model,coef=DEFAULT_COEF):
     values = []
     nb_of_samples = len(data_set)
     for feature_index in range(len(data_set[0])):
+        result = 0
         for sample_index in range(nb_of_samples):
             result += shapley_value_single(data_set,model,feature_index,sample_index,coef)
         values.append(result/nb_of_samples)
