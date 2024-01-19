@@ -1,6 +1,7 @@
 import pytest
 import math
 import numpy as np
+import shap
 from shapley_values import shapley_value
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
@@ -19,6 +20,16 @@ def model(test_data_point):
     test_data_point = test_data_point.reshape(1,-1)
     prediction = knn.predict(test_data_point)
     return prediction
+
+def test_model_shap():
+    explainer = shap.Explainer(knn.predict, X_test)
+    shapley_values = explainer(X_test)
+    values = shapley_values.values
+    values = np.array(values)
+    avg_values = np.average(values, axis=0)
+
+    print(avg_values)
+    assert(False)
 
 def test_shapley_value_single():
     res = shapley_value(X_test,model,feature_index=3,sample_index=1)
@@ -39,3 +50,5 @@ def test_shapley_value_all():
     res = shapley_value(X_test,model)
     print(res)
     assert(False)
+
+
